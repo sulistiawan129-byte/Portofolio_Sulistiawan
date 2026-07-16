@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>CIKOPS-FM System — Demo Publik</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#081524; --bg2:#0c1c30; --bg3:#10233a;
+    --surface:#0f2138; --surface2:#142a45;
+    --border:rgba(255,255,255,0.08); --border2:rgba(255,255,255,0.14);
+    --brand:#5b8cff; --brand2:#7ba3ff; --navy:#0a1e3d; --neon:#22c1ff;
+    --green:#2fd894; --green-soft:rgba(47,216,148,0.12);
+    --orange:#ffab5c; --orange-soft:rgba(255,171,92,0.12);
+    --red:#ff6b63; --red-soft:rgba(255,107,99,0.12);
+    --purple:#a793ff;
+    --gold:#2dd4c4; --gold2:#5eead4; --gold-soft:rgba(45,212,196,0.14); --gold-on:#06231f;
+    --t1:#f0f5fc; --t2:rgba(224,234,251,0.86); --t3:rgba(198,214,240,0.66);
+    --font:'Space Mono','JetBrains Mono',monospace;
+    --r1:16px; --r2:22px; --r3:30px; --pill:999px;
+    --shadow-sm:0 2px 10px rgba(0,0,0,0.3);
+    --shadow-md:0 8px 28px rgba(0,0,0,0.36);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 8% 0%, rgba(91,140,255,0.08), transparent 38%),
+      radial-gradient(circle at 96% 100%, rgba(34,193,255,0.06), transparent 42%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0 1px, transparent 1px 34px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0 1px, transparent 1px 34px),
+      var(--bg);
+    color:var(--t1); font-family:'Inter',sans-serif; font-size:13.5px;
+  }
+  .mono{font-family:var(--font);}
+  button{font-family:var(--font); cursor:pointer;}
+  a{color:inherit; text-decoration:none;}
+  input,select{font-family:'Inter',sans-serif;}
+
+  /* ---------- glow card recipe ---------- */
+  .glowCard{
+    background:rgba(15,33,56,0.55); border:1px solid var(--border2); border-radius:var(--r2);
+    box-shadow:0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06); padding:20px;
+  }
+  .glowCard.blue{ border-color:rgba(91,140,255,0.4); box-shadow:0 0 0 1px rgba(91,140,255,0.15), 0 8px 24px rgba(91,140,255,0.1); }
+  .glowCard.purple{ border-color:rgba(167,147,255,0.4); box-shadow:0 0 0 1px rgba(167,147,255,0.15), 0 8px 24px rgba(167,147,255,0.1); }
+  .glowCard.gold{ border-color:rgba(45,212,196,0.4); box-shadow:0 0 0 1px rgba(45,212,196,0.15), 0 8px 24px rgba(45,212,196,0.1); }
+  .glowCard.green{ border-color:rgba(47,216,148,0.4); box-shadow:0 0 0 1px rgba(47,216,148,0.15), 0 8px 24px rgba(47,216,148,0.1); }
+
+  .iconBox{ width:46px; height:46px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:19px; flex-shrink:0; }
+  .iconBox.blue{ background:rgba(91,140,255,0.1); border:1.5px solid rgba(91,140,255,0.5); box-shadow:0 0 16px rgba(91,140,255,0.35); }
+  .iconBox.teal{ background:rgba(45,212,196,0.1); border:1.5px solid rgba(45,212,196,0.5); box-shadow:0 0 16px rgba(45,212,196,0.35); }
+  .iconBox.purple{ background:rgba(167,147,255,0.1); border:1.5px solid rgba(167,147,255,0.5); box-shadow:0 0 16px rgba(167,147,255,0.35); }
+  .iconBox.green{ background:rgba(47,216,148,0.1); border:1.5px solid rgba(47,216,148,0.5); box-shadow:0 0 16px rgba(47,216,148,0.35); }
+  .iconBox.gold{ background:rgba(255,171,92,0.1); border:1.5px solid rgba(255,171,92,0.5); box-shadow:0 0 16px rgba(255,171,92,0.35); }
+  .iconBox.red{ background:rgba(255,107,99,0.1); border:1.5px solid rgba(255,107,99,0.5); box-shadow:0 0 16px rgba(255,107,99,0.35); }
+
+  .neonBtn{
+    padding:11px 20px; border-radius:14px; border:none; cursor:pointer;
+    background:linear-gradient(90deg,#3b82f6,#8b5cf6,#ec4899); color:#fff; font-weight:700; font-size:12.5px;
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    box-shadow:0 8px 24px rgba(139,92,246,0.35); transition:transform .15s ease;
+  }
+  .neonBtn:hover{ transform:translateY(-2px); }
+  .pillBtn{
+    padding:9px 18px; border-radius:var(--pill); background:linear-gradient(135deg, var(--gold), var(--gold2));
+    color:var(--gold-on); font-weight:700; font-size:12px; border:none; cursor:pointer;
+    box-shadow:0 8px 22px rgba(45,212,196,0.3); transition:transform .15s;
+  }
+  .pillBtn:hover{ transform:translateY(-2px); }
+  .ghostBtn{
+    padding:9px 16px; border-radius:12px; border:1px solid var(--border2); background:var(--surface2);
+    color:var(--t2); font-size:12px; font-weight:600;
+  }
+  .ghostBtn.active{ background:var(--brand); color:#fff; border-color:var(--brand); }
+  .ghostBtn.activeGreen{ background:var(--green); color:#06231f; border-color:var(--green); }
+
+  /* ---------- login ---------- */
+  #view-login{ min-height:100vh; display:grid; grid-template-columns:1fr 1fr; }
+  @media(max-width:860px){ #view-login{ grid-template-columns:1fr; } .login-hero{ display:none; } }
+  .login-hero{
+    background:linear-gradient(150deg, #4d6bff, #8b6cf2 55%, #c76cd8);
+    display:flex; flex-direction:column; justify-content:center; padding:60px; position:relative; overflow:hidden;
+  }
+  .login-hero::before{ content:''; position:absolute; width:520px; height:520px; border-radius:50%; border:1px solid rgba(255,255,255,0.25); right:-120px; bottom:-160px; }
+  .login-brand{ display:flex; align-items:center; gap:12px; margin-bottom:60px; }
+  .login-brand img{ width:44px; height:44px; border-radius:12px; }
+  .login-brand .n{ font-weight:700; font-size:16px; }
+  .login-brand .s{ font-size:11.5px; color:rgba(255,255,255,0.8); }
+  .login-hero h1{ font-size:34px; color:#fff; line-height:1.25; margin-bottom:18px; }
+  .login-hero h1 span{ color:#c8ffe8; }
+  .login-hero p{ color:rgba(255,255,255,0.85); font-size:13.5px; max-width:380px; }
+  .login-panel{ display:flex; align-items:center; justify-content:center; padding:40px; }
+  .login-card{ width:100%; max-width:380px; background:var(--surface); border:1px solid var(--border2); border-radius:var(--r2); padding:36px 30px; }
+  .login-lock{ width:56px; height:56px; border-radius:16px; border:1.5px solid var(--brand); display:flex; align-items:center; justify-content:center; font-size:22px; margin:0 auto 18px; box-shadow:0 0 20px rgba(91,140,255,0.4); }
+  .login-card h2{ text-align:center; font-size:18px; margin-bottom:4px; }
+  .login-card .sub{ text-align:center; color:var(--t3); font-size:11.5px; margin-bottom:26px; }
+  .field{ margin-bottom:16px; }
+  .field label{ font-size:10.5px; color:var(--t3); display:block; margin-bottom:6px; letter-spacing:0.4px; }
+  .field input{
+    width:100%; padding:12px 14px; border-radius:10px; background:var(--bg2); border:1px solid var(--border2);
+    color:var(--t1); font-size:13.5px;
+  }
+  .field input:focus{ outline:none; border-color:var(--brand); }
+  .login-submit{
+    width:100%; padding:13px; border-radius:12px; border:none; cursor:pointer;
+    background:linear-gradient(90deg,#4d6bff,#c76cd8); color:#fff; font-weight:700; font-size:13.5px;
+    display:flex; align-items:center; justify-content:center; gap:8px; margin-top:6px;
+  }
+  .login-foot{ text-align:center; color:var(--t3); font-size:11.5px; margin-top:16px; }
+
+  /* ---------- app shell ---------- */
+  #view-app{ display:none; }
+  #view-app.active{ display:flex; min-height:100vh; }
+  .sidebar{
+    width:240px; flex-shrink:0; background:var(--surface); border-right:1px solid var(--border);
+    display:flex; flex-direction:column; position:sticky; top:0; height:100vh; overflow-y:auto;
+  }
+  .brand-row{ display:flex; align-items:center; gap:10px; padding:18px; }
+  .brand-row img{ width:38px; height:38px; border-radius:11px; filter:drop-shadow(0 4px 10px rgba(91,140,255,0.4)); }
+  .brand-name{ font-weight:700; font-size:13.5px; }
+  .brand-sub{ font-size:10.5px; color:var(--t3); }
+  nav.sidenav{ flex:1; padding:8px 10px; }
+  .nav-item{
+    display:flex; align-items:center; gap:10px; width:100%; padding:9px 12px; border-radius:10px;
+    border:none; background:transparent; color:var(--t2); font-size:12.5px; margin-bottom:2px; text-align:left; font-weight:500;
+  }
+  .nav-item:hover{ background:var(--bg2); }
+  .nav-item.active{ background:rgba(91,140,255,0.12); color:var(--brand); font-weight:700; border-left:2px solid var(--brand); }
+  .nav-item.locked{ opacity:.45; cursor:not-allowed; }
+  .nav-section-label{ font-size:9.5px; color:var(--t3); font-weight:700; letter-spacing:0.6px; text-transform:uppercase; padding:14px 12px 5px; }
+  .sidebar-foot{ padding:10px; border-top:1px solid var(--border); }
+  .exit-btn{ display:flex; align-items:center; gap:10px; width:100%; padding:9px 14px; border-radius:10px; border:none; background:transparent; color:var(--red); font-size:12.5px; font-weight:600; }
+
+  .main{ flex:1; min-width:0; }
+  .topbar{
+    display:flex; align-items:center; gap:14px; padding:14px 24px; border-bottom:1px solid var(--border);
+    background:var(--surface); position:sticky; top:0; z-index:10; flex-wrap:wrap;
+  }
+  .search-pill{
+    flex:1; min-width:160px; max-width:400px; display:flex; align-items:center; gap:8px; padding:9px 14px;
+    border-radius:var(--pill); background:var(--bg2); border:1px solid var(--border2); color:var(--t3); font-size:12px;
+  }
+  .live-badge{ display:flex; align-items:center; gap:6px; padding:7px 14px; border-radius:var(--pill); border:1px solid var(--green); color:var(--green); font-size:11px; font-weight:700; }
+  .live-dot{ width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green); }
+  .topbar-icon{ width:36px; height:36px; border-radius:10px; border:1px solid var(--border2); background:var(--bg2); display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--t2); flex-shrink:0; }
+  .profile-chip{ display:flex; align-items:center; gap:10px; margin-left:auto; }
+  .profile-avatar{ width:34px; height:34px; border-radius:50%; background:var(--brand); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; }
+  .profile-chip .n{ font-size:12.5px; font-weight:700; line-height:1.3; }
+  .profile-chip .r{ font-size:10.5px; color:var(--t3); }
+  .hamburger{ display:none; width:36px; height:36px; border-radius:10px; border:1px solid var(--border2); background:var(--bg2); align-items:center; justify-content:center; color:var(--t2); }
+  .sidebar-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:399; }
+  @media(max-width:900px){
+    .sidebar{ position:fixed; left:-260px; z-index:400; transition:left .25s; height:100vh; }
+    .sidebar.open{ left:0; }
+    .hamburger{ display:flex; }
+    .sidebar-overlay.show{ display:block; }
+    .search-pill{ order:3; max-width:none; }
+  }
+
+  .content{ padding:24px 26px 60px; max-width:1300px; margin:0 auto; }
+  .tab-view{ display:none; }
+  .tab-view.active{ display:block; animation:fade .25s ease; }
+  @keyframes fade{ from{opacity:0;} to{opacity:1;} }
+
+  .hero-card{
+    border-radius:26px; padding:32px; margin-bottom:22px; position:relative; overflow:hidden;
+    background:linear-gradient(135deg, #3b5fe8, #6a5bd8 55%, #8f5bd8);
+  }
+  .hero-top{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:26px; flex-wrap:wrap; gap:10px; }
+  .hero-eyebrow{ display:flex; align-items:center; gap:8px; color:rgba(255,255,255,0.85); font-size:11px; font-weight:700; letter-spacing:0.5px; }
+  .hero-time{ text-align:right; color:#fff; }
+  .hero-time .t{ font-size:22px; font-weight:700; }
+  .hero-time .d{ font-size:11px; color:rgba(255,255,255,0.75); }
+  .hero-card h1{ color:#fff; font-size:30px; margin-bottom:6px; }
+  .hero-card p{ color:rgba(255,255,255,0.85); font-size:13px; margin-bottom:26px; }
+  .hero-stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  @media(max-width:800px){ .hero-stats{ grid-template-columns:1fr 1fr; } }
+  .hero-stat .v{ color:#fff; font-size:24px; font-weight:700; }
+  .hero-stat .l{ color:rgba(255,255,255,0.75); font-size:10.5px; margin-top:2px; }
+
+  .sectionHeading{ display:flex; align-items:center; gap:8px; margin:22px 0 14px; font-size:12px; font-weight:700; color:var(--brand); text-transform:uppercase; letter-spacing:0.06em; }
+  .sectionHeading::before{ content:''; width:3px; height:13px; border-radius:2px; background:var(--brand); }
+
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media(max-width:800px){ .two-col{ grid-template-columns:1fr; } }
+  .task-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 4px; border-bottom:1px solid var(--border); font-size:12.5px; }
+  .task-row .who{ display:flex; align-items:center; gap:10px; }
+  .task-row .avatar{ width:28px; height:28px; border-radius:50%; background:var(--bg2); display:flex; align-items:center; justify-content:center; font-size:13px; }
+  .task-row .loc{ font-size:10.5px; color:var(--t3); }
+  .status-done{ color:var(--green); font-size:11px; font-weight:700; }
+
+  .stat-grid4{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  @media(max-width:800px){ .stat-grid4{ grid-template-columns:1fr 1fr; } }
+  .stat4{ padding:18px; border-radius:16px; position:relative; overflow:hidden; }
+  .stat4 .bar{ position:absolute; top:0; left:0; right:0; height:3px; }
+  .stat4 .v{ font-size:26px; font-weight:700; margin:14px 0 4px; }
+  .stat4 .l{ font-size:10px; color:var(--t3); text-transform:uppercase; letter-spacing:0.4px; }
+
+  .filter-row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:16px 0; }
+  .filter-row input[type=text], .filter-row select{
+    padding:9px 14px; border-radius:10px; background:var(--surface2); border:1px solid var(--border2); color:var(--t2); font-size:12px;
+  }
+
+  table.data-table{ width:100%; border-collapse:collapse; font-size:12px; }
+  table.data-table th{ text-align:left; color:var(--t3); font-weight:700; text-transform:uppercase; font-size:10px; padding:10px 8px; border-bottom:1px solid var(--border2); letter-spacing:0.4px; }
+  table.data-table td{ padding:12px 8px; border-bottom:1px solid var(--border); color:var(--t2); }
+  .pill{ font-size:10px; font-weight:700; padding:4px 11px; border-radius:var(--pill); display:inline-block; }
+  .pill-done{ background:var(--green-soft); color:var(--green); }
+  .pill-ongoing{ background:var(--orange-soft); color:var(--orange); }
+  .pill-assigned{ background:rgba(91,140,255,0.12); color:var(--brand); }
+  .pill-cancel{ background:var(--red-soft); color:var(--red); }
+  .pill-active{ background:var(--green-soft); color:var(--green); }
+  .pill-expired{ background:var(--red-soft); color:var(--red); }
+  .del-btn{ padding:6px 12px; border-radius:8px; background:var(--red-soft); color:var(--red); border:none; font-size:11px; font-weight:700; }
+
+  .vehicle-card{ border-left:3px solid var(--brand); border-radius:14px; background:var(--surface2); padding:18px; }
+  .vehicle-card.alt{ border-left-color:var(--gold); }
+  .vfield{ display:flex; justify-content:space-between; margin-bottom:10px; font-size:12px; }
+  .vfield .l{ color:var(--t3); font-size:10px; text-transform:uppercase; }
+  .vfield .v{ font-weight:700; }
+
+  .progress-row{ margin-bottom:16px; }
+  .progress-row .top{ display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px; }
+  .progress-bar{ height:6px; border-radius:4px; background:var(--bg2); overflow:hidden; }
+  .progress-bar .fill{ height:100%; background:linear-gradient(90deg, var(--brand), var(--gold)); border-radius:4px; }
+
+  .locker-grid{ display:grid; grid-template-columns:repeat(8,1fr); gap:8px; margin-top:16px; }
+  @media(max-width:700px){ .locker-grid{ grid-template-columns:repeat(4,1fr); } }
+  .locker{ aspect-ratio:1; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-direction:column; font-size:11px; font-weight:700; cursor:pointer; }
+  .locker.tersedia{ background:linear-gradient(160deg, #2fd894, #1fa876); color:#06231f; }
+  .locker.terisi{ background:linear-gradient(160deg, #a793ff, #7c5cff); color:#fff; }
+
+  .gauge-wrap{ display:flex; align-items:center; gap:30px; flex-wrap:wrap; }
+  .gauge{ width:120px; height:120px; border-radius:50%; border:10px solid var(--brand); display:flex; align-items:center; justify-content:center; flex-direction:column; box-shadow:0 0 24px rgba(91,140,255,0.3); }
+  .gauge .n{ font-size:20px; font-weight:700; }
+  .gauge .d{ font-size:10px; color:var(--t3); }
+
+  .activity-row{ display:flex; gap:14px; align-items:flex-start; padding:14px 4px; border-bottom:1px solid var(--border); font-size:12px; }
+  .activity-tag{ font-size:10px; font-weight:700; padding:3px 9px; border-radius:6px; flex-shrink:0; min-width:64px; text-align:center; }
+  .activity-tag.edit{ background:rgba(91,140,255,0.12); color:var(--brand); }
+  .activity-tag.add{ background:var(--green-soft); color:var(--green); }
+  .activity-time{ margin-left:auto; color:var(--t3); font-size:10.5px; white-space:nowrap; }
+
+  .locked-view{ text-align:center; padding:80px 20px; color:var(--t3); }
+  .locked-view .ic{ font-size:36px; margin-bottom:14px; }
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); opacity:0;
+    background:var(--navy); color:#fff; padding:11px 20px; border-radius:var(--pill); font-size:12px;
+    transition:opacity .25s, transform .25s; pointer-events:none; z-index:200; max-width:90vw; text-align:center;
+    border:1px solid var(--border2);
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN VIEW ============ -->
+<div id="view-login">
+  <div class="login-hero">
+    <div class="login-brand">
+      <img src="assets/cikops-logo.png" alt="CIKOPS">
+      <div><div class="n">CIKOPS-FM</div><div class="s">Integrated Facility Management</div></div>
+    </div>
+    <h1>Satu Sistem,<br>Semua Operasional <span>Selaras</span></h1>
+    <p>Fleet, finance, dan fasilitas — dikelola dalam satu ekosistem terintegrasi.</p>
+  </div>
+  <div class="login-panel">
+    <div class="login-card">
+      <div class="login-lock">🔒</div>
+      <h2>Masuk Admin/GA</h2>
+      <div class="sub">DEMO PUBLIK · CIKOPS-FM System</div>
+      <div class="field"><label>EMAIL</label><input type="email" placeholder="admin@cikops-fm.demo"></div>
+      <div class="field"><label>KATA SANDI</label><input type="password" placeholder="••••••••"></div>
+      <button class="login-submit" onclick="doLogin()">Masuk →</button>
+      <div class="login-foot">Demo publik — email &amp; kata sandi apa saja bisa dipakai untuk masuk.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div id="view-app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand-row">
+      <img src="assets/cikops-logo.png" alt="CIKOPS">
+      <div><div class="brand-name">CIKOPS</div><div class="brand-sub">CIKOPS-FM System</div></div>
+    </div>
+    <nav class="sidenav">
+      <button class="nav-item active" data-tab="overview" onclick="switchTab('overview', this)">📊 Overview</button>
+      <div class="nav-section-label">Fleet &amp; Vehicles</div>
+      <button class="nav-item" data-tab="tasks" onclick="switchTab('tasks', this)">🗂️ Tasks</button>
+      <button class="nav-item" data-tab="vehicles" onclick="switchTab('vehicles', this)">🚗 Vehicles</button>
+      <button class="nav-item" data-tab="gasstations" onclick="switchTab('gasstations', this)">⛽ Gas Stations</button>
+      <div class="nav-section-label">Finance</div>
+      <button class="nav-item" data-tab="claims" onclick="switchTab('claims', this)">🧾 Claims</button>
+      <button class="nav-item" data-tab="overtime" onclick="switchTab('overtime', this)">⏱️ Overtime</button>
+      <button class="nav-item" data-tab="driverbudget" onclick="switchTab('driverbudget', this)">💳 Driver Budget</button>
+      <button class="nav-item" data-tab="opfund" onclick="switchTab('opfund', this)">💰 Operational Fund</button>
+      <div class="nav-section-label">Facility</div>
+      <button class="nav-item" data-tab="canteen" onclick="switchTab('canteen', this)">🍱 Canteen</button>
+      <button class="nav-item" data-tab="locker" onclick="switchTab('locker', this)">🔐 Locker</button>
+      <div class="nav-section-label">System</div>
+      <button class="nav-item" data-tab="reports" onclick="switchTab('reports', this)">📈 Reports</button>
+      <button class="nav-item locked" onclick="lockedTab('Master Data')">🗄️ Master Data 🔒</button>
+      <button class="nav-item" data-tab="activitylog" onclick="switchTab('activitylog', this)">📋 Activity Log</button>
+    </nav>
+    <div class="sidebar-foot"><a href="index.html" class="exit-btn">🚪 Kembali ke Portofolio</a></div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" onclick="openSidebar()">☰</button>
+      <div class="search-pill">🔍 Search menu, data, or module...</div>
+      <div class="live-badge"><span class="live-dot"></span>Live</div>
+      <div class="topbar-icon">ID</div>
+      <div class="topbar-icon">☀️</div>
+      <div class="topbar-icon">🔔</div>
+      <div class="profile-chip">
+        <div class="profile-avatar">D</div>
+        <div><div class="n">Demo Admin</div><div class="r">Admin</div></div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ===== OVERVIEW ===== -->
+      <div class="tab-view active" id="tab-overview">
+        <div class="hero-card">
+          <div class="hero-top">
+            <div class="hero-eyebrow">● OPERATIONAL COMMAND CENTER</div>
+            <div class="hero-time"><div class="t" id="clock">21:46</div><div class="d">Thursday, 16 July 2026</div></div>
+          </div>
+          <h1>Good Evening, Demo Admin 👋</h1>
+          <p>Here's everything at a glance. (Data di seluruh demo ini adalah simulasi)</p>
+          <div class="hero-stats">
+            <div class="hero-stat"><div class="v">9</div><div class="l">AVAILABLE DRIVERS</div></div>
+            <div class="hero-stat"><div class="v">11</div><div class="l">TOTAL VEHICLES</div></div>
+            <div class="hero-stat"><div class="v">Rp 8.450.000</div><div class="l">CLAIMS THIS MONTH</div></div>
+            <div class="hero-stat"><div class="v">2</div><div class="l">URGENT DOCUMENTS</div></div>
+          </div>
+        </div>
+
+        <div class="sectionHeading">Today's Operations</div>
+        <div class="two-col">
+          <div class="glowCard blue">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <div style="display:flex; align-items:center; gap:10px;"><span class="iconBox blue">🗂️</span><b>Tasks Today</b></div>
+              <a href="#" onclick="switchTabById('tasks'); return false;" style="color:var(--brand); font-size:11.5px;">View all →</a>
+            </div>
+            <div class="task-row"><div class="who"><span class="avatar">🧑</span><div><div>Budi Santoso</div><div class="loc">📍 Kantor Pusat Cikarang</div></div></div><span class="status-done">Selesai</span></div>
+            <div class="task-row"><div class="who"><span class="avatar">👩</span><div><div>Siti Nurhaliza</div><div class="loc">📍 Bengkel Rekanan</div></div></div><span class="status-done">Selesai</span></div>
+          </div>
+          <div class="glowCard gold">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;"><span class="iconBox gold">💰</span><b>Operational Fund</b></div>
+            <div style="display:flex; gap:20px;">
+              <div><div style="font-size:10px; color:var(--t3);">CIK</div><div style="font-size:18px; font-weight:700;">Rp 4.200.000</div><div style="font-size:10.5px; color:var(--green);">GAP +Rp 0</div></div>
+              <div><div style="font-size:10px; color:var(--t3);">PRB</div><div style="font-size:18px; font-weight:700;">Rp 3.100.000</div><div style="font-size:10.5px; color:var(--green);">GAP +Rp 0</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TASKS ===== -->
+      <div class="tab-view" id="tab-tasks">
+        <div class="filter-row" style="justify-content:space-between;">
+          <h2 style="font-size:16px;">Tasks</h2>
+          <button class="neonBtn" onclick="assignNewTask()">+ Tugaskan Driver</button>
+        </div>
+        <div class="stat-grid4">
+          <div class="stat4 glowCard blue"><div class="bar" style="background:var(--brand);"></div><div class="v" id="st-total">5</div><div class="l">Total Tugas</div></div>
+          <div class="stat4 glowCard gold"><div class="bar" style="background:var(--orange);"></div><div class="v">0</div><div class="l">Baru Ditugaskan</div></div>
+          <div class="stat4 glowCard blue"><div class="bar" style="background:var(--neon);"></div><div class="v">1</div><div class="l">Sedang Berjalan</div></div>
+          <div class="stat4 glowCard green"><div class="bar" style="background:var(--green);"></div><div class="v" id="st-done">4</div><div class="l">Selesai</div></div>
+        </div>
+        <div class="filter-row">
+          <button class="ghostBtn active">ASSIGNED</button>
+          <button class="ghostBtn">ON GOING</button>
+          <button class="ghostBtn">DONE</button>
+          <button class="ghostBtn">CANCELLED</button>
+          <input type="text" placeholder="Cari tujuan, driver...">
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Waktu</th><th>Driver</th><th>Kendaraan</th><th>Tujuan</th><th>Jenis</th><th>Status</th><th></th></tr></thead>
+          <tbody id="task-rows"></tbody>
+        </table>
+      </div>
+
+      <!-- ===== VEHICLES ===== -->
+      <div class="tab-view" id="tab-vehicles">
+        <div class="filter-row" style="justify-content:space-between;">
+          <h2 style="font-size:16px;">Vehicle Fleet</h2>
+          <button class="pillBtn" onclick="toast('Form tambah kendaraan — simulasi')">+ Add Vehicle</button>
+        </div>
+        <div class="two-col">
+          <div class="vehicle-card">
+            <div style="display:flex; justify-content:space-between;"><b>B 1234 XYZ</b><span class="pill pill-active">Active</span></div>
+            <div style="color:var(--t3); font-size:11.5px; margin:4px 0 14px;">Toyota Avanza · 2022</div>
+            <div class="vfield"><span class="l">Driver</span><span class="v">Budi Santoso</span></div>
+            <div class="vfield"><span class="l">BBM</span><span class="v">Pertalite</span></div>
+            <div class="vfield"><span class="l">KIR</span><span class="v" style="color:var(--green);">12 Sep 2026</span></div>
+            <div class="vfield"><span class="l">STNK</span><span class="v" style="color:var(--green);">Aktif</span></div>
+          </div>
+          <div class="vehicle-card alt">
+            <div style="display:flex; justify-content:space-between;"><b>B 5678 ABC</b><span class="pill pill-active">Active</span></div>
+            <div style="color:var(--t3); font-size:11.5px; margin:4px 0 14px;">Daihatsu Xenia · 2021</div>
+            <div class="vfield"><span class="l">Driver</span><span class="v">Siti Nurhaliza</span></div>
+            <div class="vfield"><span class="l">BBM</span><span class="v">Pertalite</span></div>
+            <div class="vfield"><span class="l">KIR</span><span class="v" style="color:var(--red);">Expired</span></div>
+            <div class="vfield"><span class="l">STNK</span><span class="v" style="color:var(--green);">Aktif</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== GAS STATIONS ===== -->
+      <div class="tab-view" id="tab-gasstations">
+        <h2 style="font-size:16px; margin-bottom:16px;">Gas Stations</h2>
+        <div class="stat-grid4">
+          <div class="glowCard blue" style="display:flex; align-items:center; gap:14px;"><span class="iconBox blue">⛽</span><div><div style="font-size:20px; font-weight:700;">4</div><div style="font-size:10px; color:var(--t3);">TOTAL STATIONS</div></div></div>
+          <div class="glowCard gold" style="display:flex; align-items:center; gap:14px;"><span class="iconBox teal">🧪</span><div><div style="font-size:20px; font-weight:700;">3/3</div><div style="font-size:10px; color:var(--t3);">FUEL TYPES TRACKED</div></div></div>
+          <div class="glowCard purple" style="display:flex; align-items:center; gap:14px;"><span class="iconBox purple">📊</span><div><div style="font-size:20px; font-weight:700;">3.0</div><div style="font-size:10px; color:var(--t3);">AVG FUEL TYPES/STATION</div></div></div>
+        </div>
+        <div class="sectionHeading">Fuel Type Distribution</div>
+        <div class="glowCard">
+          <div class="progress-row"><div class="top"><span>Pertalite</span><span>4 stations · 100%</span></div><div class="progress-bar"><div class="fill" style="width:100%;"></div></div></div>
+          <div class="progress-row"><div class="top"><span>Pertamax</span><span>4 stations · 100%</span></div><div class="progress-bar"><div class="fill" style="width:100%;"></div></div></div>
+          <div class="progress-row"><div class="top"><span>Solar</span><span>3 stations · 75%</span></div><div class="progress-bar"><div class="fill" style="width:75%;"></div></div></div>
+        </div>
+        <div class="sectionHeading">Station List</div>
+        <div id="station-grid" class="two-col"></div>
+      </div>
+
+      <!-- ===== CLAIMS ===== -->
+      <div class="tab-view" id="tab-claims">
+        <div class="filter-row" style="justify-content:space-between;">
+          <h2 style="font-size:16px;">Claims</h2>
+          <button class="pillBtn" onclick="toast('Form klaim baru — simulasi')">+ New Claim</button>
+        </div>
+        <div class="stat-grid4" style="grid-template-columns:repeat(3,1fr);">
+          <div class="glowCard blue" style="display:flex; align-items:center; gap:14px;"><span class="iconBox blue">📋</span><div><div style="font-size:20px; font-weight:700;">6</div><div style="font-size:10px; color:var(--t3);">CLAIMS</div></div></div>
+          <div class="glowCard gold" style="display:flex; align-items:center; gap:14px;"><span class="iconBox gold">💳</span><div><div style="font-size:20px; font-weight:700;">Rp 2.850.000</div><div style="font-size:10px; color:var(--t3);">TOTAL</div></div></div>
+          <div class="glowCard green" style="display:flex; align-items:center; gap:14px;"><span class="iconBox green">👥</span><div><div style="font-size:20px; font-weight:700;">3</div><div style="font-size:10px; color:var(--t3);">ACTIVE DRIVERS</div></div></div>
+        </div>
+        <table class="data-table" style="margin-top:18px;">
+          <thead><tr><th>Tanggal</th><th>Driver</th><th>Keperluan</th><th>Nominal</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>12 Jul 2026</td><td>Budi Santoso</td><td>BBM &amp; Parkir</td><td>Rp 450.000</td><td><span class="pill pill-done">Approved</span></td></tr>
+            <tr><td>14 Jul 2026</td><td>Siti Nurhaliza</td><td>Tol &amp; BBM</td><td>Rp 620.000</td><td><span class="pill pill-ongoing">Pending</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ===== OVERTIME ===== -->
+      <div class="tab-view" id="tab-overtime">
+        <h2 style="font-size:16px; margin-bottom:16px;">Overtime</h2>
+        <div class="stat-grid4">
+          <div class="glowCard blue" style="display:flex; align-items:center; gap:14px;"><span class="iconBox blue">📁</span><div><div style="font-size:20px; font-weight:700;">14</div><div style="font-size:10px; color:var(--t3);">ENTRIES</div></div></div>
+          <div class="glowCard gold" style="display:flex; align-items:center; gap:14px;"><span class="iconBox teal">⏱️</span><div><div style="font-size:20px; font-weight:700;">42 jam</div><div style="font-size:10px; color:var(--t3);">TOTAL JAM OT</div></div></div>
+          <div class="glowCard purple" style="display:flex; align-items:center; gap:14px;"><span class="iconBox gold">💳</span><div><div style="font-size:20px; font-weight:700;">Rp 2.100.000</div><div style="font-size:10px; color:var(--t3);">TOTAL NOMINAL</div></div></div>
+          <div class="glowCard blue" style="display:flex; align-items:center; gap:14px;"><span class="iconBox purple">🏭</span><div><div style="font-size:20px; font-weight:700;">CIK</div><div style="font-size:10px; color:var(--t3);">PLANT TERBANYAK OT</div></div></div>
+        </div>
+        <div class="sectionHeading">Plant Comparison</div>
+        <div class="two-col">
+          <div class="glowCard blue"><b style="color:var(--brand);">CIK</b><div style="font-size:11px; color:var(--t3); margin:8px 0 4px;">Jam OT</div><div style="font-size:18px; font-weight:700;">26 jam (62%)</div></div>
+          <div class="glowCard green"><b style="color:var(--green);">PRB</b><div style="font-size:11px; color:var(--t3); margin:8px 0 4px;">Jam OT</div><div style="font-size:18px; font-weight:700;">16 jam (38%)</div></div>
+        </div>
+      </div>
+
+      <!-- ===== DRIVER BUDGET ===== -->
+      <div class="tab-view" id="tab-driverbudget">
+        <h2 style="font-size:16px; margin-bottom:16px;">Driver Budget</h2>
+        <div class="stat-grid4" style="grid-template-columns:repeat(3,1fr);">
+          <div class="glowCard blue" style="display:flex; align-items:center; gap:14px;"><span class="iconBox blue">👤</span><div><div style="font-size:20px; font-weight:700;">9</div><div style="font-size:10px; color:var(--t3);">TOTAL DRIVERS</div></div></div>
+          <div class="glowCard gold" style="display:flex; align-items:center; gap:14px;"><span class="iconBox teal">💳</span><div><div style="font-size:20px; font-weight:700;">Rp 21.000.000</div><div style="font-size:10px; color:var(--t3);">BUDGET/MONTH</div></div></div>
+          <div class="glowCard purple" style="display:flex; align-items:center; gap:14px;"><span class="iconBox purple">📅</span><div><div style="font-size:20px; font-weight:700;">Rp 252.000.000</div><div style="font-size:10px; color:var(--t3);">PER YEAR</div></div></div>
+        </div>
+        <div class="sectionHeading">Operational Allowance Tiers</div>
+        <div class="glowCard">
+          <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border);"><span>Director Driver · 1 driver</span><b>Rp 3.000.000/orang</b></div>
+          <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border);"><span>OPS Driver · 4 driver</span><b>Rp 2.000.000/orang</b></div>
+          <div style="display:flex; justify-content:space-between; padding:10px 0;"><span>User Driver · 4 driver</span><b>Rp 1.750.000/orang</b></div>
+        </div>
+      </div>
+
+      <!-- ===== OPERATIONAL FUND ===== -->
+      <div class="tab-view" id="tab-opfund">
+        <h2 style="font-size:16px; margin-bottom:16px;">Operational Fund</h2>
+        <div class="glowCard blue">
+          <div style="font-size:11px; color:var(--t3); margin-bottom:16px;">💰 OPERATIONAL FUND HEALTH — CIK</div>
+          <div class="gauge-wrap">
+            <div class="gauge"><div class="n">86</div><div class="d">/ 100</div></div>
+            <div>
+              <div style="font-size:20px; font-weight:700;">Rp 4.200.000 <span style="font-size:12px; color:var(--t3);">Total Cash</span></div>
+              <div style="font-size:14px; color:var(--t2); margin-top:6px;">Rp 610.000 <span style="font-size:11px; color:var(--t3);">Outstanding</span></div>
+              <div style="font-size:14px; color:var(--green); margin-top:6px;">+Rp 0 <span style="font-size:11px; color:var(--t3);">GAP</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="sectionHeading">Budget Composition</div>
+        <div class="glowCard">
+          <div class="progress-row"><div class="top"><span>Op Driver (A1)</span><span>Rp 2.000.000 · 48%</span></div><div class="progress-bar"><div class="fill" style="width:48%;"></div></div></div>
+          <div class="progress-row"><div class="top"><span>Emergency (A2)</span><span>Rp 800.000 · 19%</span></div><div class="progress-bar"><div class="fill" style="width:19%;"></div></div></div>
+          <div class="progress-row"><div class="top"><span>Cash Available (A4)</span><span>Rp 1.400.000 · 33%</span></div><div class="progress-bar"><div class="fill" style="width:33%;"></div></div></div>
+        </div>
+      </div>
+
+      <!-- ===== CANTEEN ===== -->
+      <div class="tab-view" id="tab-canteen">
+        <div class="filter-row" style="justify-content:space-between;">
+          <div class="filter-row" style="margin:0;">
+            <button class="ghostBtn">Day</button><button class="ghostBtn">Week</button>
+            <button class="ghostBtn activeGreen">Month</button><button class="ghostBtn">Custom</button>
+          </div>
+          <div class="filter-row" style="margin:0;">
+            <button class="pillBtn" onclick="downloadCsv('laporan-kantin-dummy.csv', canteenCsv)">↓ CSV</button>
+            <button class="ghostBtn active" onclick="toast('PDF disimulasikan di demo publik ini')">↓ PDF</button>
+          </div>
+        </div>
+        <div class="two-col" style="margin-top:16px;">
+          <div class="glowCard green">
+            <b>🥟 Snack</b>
+            <div class="stat-grid4" style="grid-template-columns:1fr 1fr; margin-top:14px;">
+              <div><div style="font-size:10px; color:var(--t3);">ORDERED</div><div style="font-size:18px; font-weight:700;">1.240</div></div>
+              <div><div style="font-size:10px; color:var(--t3);">CONSUMED</div><div style="font-size:18px; font-weight:700; color:var(--green);">1.178</div></div>
+              <div><div style="font-size:10px; color:var(--t3);">LEFTOVER</div><div style="font-size:18px; font-weight:700;">62</div></div>
+              <div><div style="font-size:10px; color:var(--t3);">EFFICIENCY</div><div style="font-size:18px; font-weight:700; color:var(--green);">95%</div></div>
+            </div>
+          </div>
+          <div class="glowCard blue">
+            <b>🍽️ Meal</b>
+            <div class="stat-grid4" style="grid-template-columns:1fr 1fr; margin-top:14px;">
+              <div><div style="font-size:10px; color:var(--t3);">ORDERED</div><div style="font-size:18px; font-weight:700;">980</div></div>
+              <div><div style="font-size:10px; color:var(--t3);">CONSUMED</div><div style="font-size:18px; font-weight:700; color:var(--green);">936</div></div>
+              <div><div style="font-size:10px; color:var(--t3);">LEFTOVER</div><div style="font-size:18px; font-weight:700;">44</div></div>
+              <div><div style="font-size:10px; color:var(--t3);">EFFICIENCY</div><div style="font-size:18px; font-weight:700; color:var(--green);">96%</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="glowCard" style="margin-top:16px;">💡 <b>Auto Analysis:</b> Efisiensi konsumsi kantin bulan ini tergolong Sangat Baik (rata-rata 95,5%), stabil dibanding bulan lalu.</div>
+      </div>
+
+      <!-- ===== LOCKER ===== -->
+      <div class="tab-view" id="tab-locker">
+        <div class="filter-row" style="justify-content:space-between;">
+          <div class="filter-row" style="margin:0;"><button class="ghostBtn active">🔐 Overview</button><button class="ghostBtn">🗄️ Manage Lockers</button></div>
+          <button class="ghostBtn" onclick="toast('Laporan locker — simulasi')">Report</button>
+        </div>
+        <div class="stat-grid4" style="grid-template-columns:repeat(3,1fr); margin:16px 0;">
+          <div class="glowCard blue" style="text-align:center;"><div style="font-size:24px; font-weight:700; color:var(--brand);">32</div><div style="font-size:11px; color:var(--t3);">Total Lockers</div></div>
+          <div class="glowCard purple" style="text-align:center;"><div style="font-size:24px; font-weight:700; color:var(--purple);">8</div><div style="font-size:11px; color:var(--t3);">Used</div></div>
+          <div class="glowCard green" style="text-align:center;"><div style="font-size:24px; font-weight:700; color:var(--green);">24</div><div style="font-size:11px; color:var(--t3);">Available</div></div>
+        </div>
+        <div class="locker-grid" id="locker-grid"></div>
+      </div>
+
+      <!-- ===== REPORTS ===== -->
+      <div class="tab-view" id="tab-reports">
+        <div class="filter-row" style="justify-content:space-between;">
+          <div class="filter-row" style="margin:0;"><button class="ghostBtn active">Monthly</button><button class="ghostBtn">Date Range</button><button class="ghostBtn">Yearly</button></div>
+          <button class="pillBtn" onclick="generateReport()">📊 Generate Report</button>
+        </div>
+        <div class="glowCard" id="report-empty" style="text-align:center; padding:50px 20px; margin-top:16px;">
+          <div style="font-size:32px; margin-bottom:14px;">📈</div>
+          <b>Pick a period, then click Generate Report</b>
+          <div style="font-size:11.5px; color:var(--t3); margin-top:8px;">Combines Task Assignment, Claims, Overtime, Vehicles, and Operational Fund into one report.</div>
+        </div>
+        <div id="report-result" style="display:none; margin-top:16px;">
+          <div class="stat-grid4">
+            <div class="glowCard blue" style="text-align:center;"><div style="font-size:20px; font-weight:700;">142</div><div style="font-size:10px; color:var(--t3);">TOTAL TUGAS</div></div>
+            <div class="glowCard gold" style="text-align:center;"><div style="font-size:20px; font-weight:700;">18</div><div style="font-size:10px; color:var(--t3);">TOTAL KLAIM</div></div>
+            <div class="glowCard purple" style="text-align:center;"><div style="font-size:20px; font-weight:700;">36 jam</div><div style="font-size:10px; color:var(--t3);">TOTAL OVERTIME</div></div>
+            <div class="glowCard green" style="text-align:center;"><div style="font-size:20px; font-weight:700;">Rp 32,4 Jt</div><div style="font-size:10px; color:var(--t3);">DANA TERPAKAI</div></div>
+          </div>
+          <div class="glowCard" style="margin-top:14px;">
+            <b>💡 Insight</b>
+            <ul style="margin-top:10px; padding-left:18px; color:var(--t2);">
+              <li style="margin-bottom:8px;">Tugas fleet meningkat 8% dibanding bulan lalu.</li>
+              <li style="margin-bottom:8px;">Efisiensi kantin tetap di atas 95% selama 3 bulan.</li>
+              <li>Dua kendaraan mendekati jadwal servis dalam 2 minggu ke depan.</li>
+            </ul>
+            <div style="display:flex; gap:10px; margin-top:16px;">
+              <button class="ghostBtn" onclick="downloadCsv('laporan-fleet-dummy.csv', reportCsv)">↓ CSV</button>
+              <button class="ghostBtn" onclick="toast('PDF di sistem asli dibuat dengan jsPDF — disimulasikan di sini')">↓ PDF</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== ACTIVITY LOG ===== -->
+      <div class="tab-view" id="tab-activitylog">
+        <h2 style="font-size:16px; margin-bottom:6px;">Activity Log</h2>
+        <div style="color:var(--t3); font-size:12px; margin-bottom:16px;">Complete audit trail of who changed what, across Claims, Operational Fund, and Master Data.</div>
+        <div class="filter-row"><select><option>All Tables</option></select><button class="ghostBtn active">7d</button><button class="ghostBtn">30d</button><button class="ghostBtn">90d</button></div>
+        <div class="glowCard" style="padding:6px 16px;">
+          <div class="activity-row"><span class="activity-tag edit">Diubah</span><div><b>Demo Admin</b> · admin<br>Operational Fund — 3 field(s) changed</div><span class="activity-time">16 Jul, 21:45</span></div>
+          <div class="activity-row"><span class="activity-tag add">Ditambah</span><div><b>Demo Staff</b> · ga<br>Employees</div><span class="activity-time">16 Jul, 15:37</span></div>
+          <div class="activity-row"><span class="activity-tag add">Ditambah</span><div><b>Demo Admin</b> · admin<br>Claims</div><span class="activity-time">16 Jul, 15:31</span></div>
+          <div class="activity-row"><span class="activity-tag edit">Diubah</span><div><b>Demo Admin</b> · admin<br>Drivers — 3 field(s) changed</div><span class="activity-time">16 Jul, 15:17</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  function doLogin(){
+    document.getElementById('view-login').style.display = 'none';
+    const app = document.getElementById('view-app');
+    app.style.display = 'flex';
+    app.classList.add('active');
+  }
+
+  function openSidebar(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebar-overlay').classList.add('show'); }
+  function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebar-overlay').classList.remove('show'); }
+
+  function switchTab(tab, btn){
+    document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-view').forEach(v=>v.classList.remove('active'));
+    if(btn) btn.classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+    closeSidebar();
+  }
+  function switchTabById(tab){ switchTab(tab, document.querySelector(`.nav-item[data-tab="${tab}"]`)); }
+  function lockedTab(name){ toast('🔒 Modul "' + name + '" berjalan penuh di sistem produksi — disederhanakan untuk demo publik ini.'); closeSidebar(); }
+  function toast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(window._tt); window._tt = setTimeout(()=>t.classList.remove('show'), 2600);
+  }
+
+  /* live clock */
+  function tick(){
+    const d = new Date();
+    document.getElementById('clock').textContent = d.toTimeString().slice(0,5);
+  }
+  tick(); setInterval(tick, 30000);
+
+  /* Tasks */
+  let tasks = [
+    { t:'09.15', driver:'Budi Santoso', v:'B 1234 XYZ', dest:'Kantor Pusat Cikarang', job:'Document Delivery', status:'done' },
+    { t:'10.02', driver:'Siti Nurhaliza', v:'B 5678 ABC', dest:'Bengkel Rekanan', job:'Vehicle Service', status:'done' },
+    { t:'11.40', driver:'Agus Prasetyo', v:'B 9012 DEF', dest:'Jakarta Pusat', job:'Employee Support', status:'ongoing' },
+    { t:'13.20', driver:'Rudi Hartono', v:'B 3456 GHI', dest:'Vendor ATK', job:'Goods Pickup', status:'done' },
+    { t:'14.55', driver:'Budi Santoso', v:'B 1234 XYZ', dest:'Bandara Soetta', job:'Guest Pickup', status:'done' },
+  ];
+  const stLabel = {assigned:'Assigned', ongoing:'On Going', done:'Done', cancel:'Cancelled'};
+  const stPill = {assigned:'pill-assigned', ongoing:'pill-ongoing', done:'pill-done', cancel:'pill-cancel'};
+  function renderTasks(){
+    const tbody = document.getElementById('task-rows');
+    tbody.innerHTML = '';
+    tasks.forEach(t=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${t.t}</td><td>${t.driver}</td><td>${t.v}</td><td>${t.dest}</td><td>${t.job}</td><td><span class="pill ${stPill[t.status]}">${stLabel[t.status]}</span></td><td><button class="del-btn" onclick="toast('Hapus tugas — simulasi')">Hapus</button></td>`;
+      tbody.appendChild(tr);
+    });
+    document.getElementById('st-total').textContent = tasks.length;
+    document.getElementById('st-done').textContent = tasks.filter(x=>x.status==='done').length;
+  }
+  const poolDrivers=['Budi Santoso','Siti Nurhaliza','Agus Prasetyo','Rudi Hartono','Wawan Setiadi'];
+  const poolV=['B 1234 XYZ','B 5678 ABC','B 9012 DEF','B 3456 GHI'];
+  const poolJob=['Document Delivery','Vehicle Service','Employee Support','Goods Pickup','Guest Pickup'];
+  const poolDest=['Kantor Pusat Cikarang','Bengkel Rekanan','Jakarta Pusat','Vendor ATK','Bandara Soetta'];
+  function assignNewTask(){
+    const now=new Date();
+    tasks.unshift({ t:now.toTimeString().slice(0,5).replace(':','.'), driver:poolDrivers[Math.floor(Math.random()*poolDrivers.length)], v:poolV[Math.floor(Math.random()*poolV.length)], dest:poolDest[Math.floor(Math.random()*poolDest.length)], job:poolJob[Math.floor(Math.random()*poolJob.length)], status:'assigned' });
+    renderTasks();
+  }
+  renderTasks();
+
+  /* Gas stations */
+  const stations = [
+    {name:'SPBU Cikarang Baru', addr:'Jl. Industri Raya No. 12', fuels:['Pertalite','Pertamax','Solar']},
+    {name:'SPBU Lippo Cikarang', addr:'Jl. MH Thamrin', fuels:['Pertalite','Solar']},
+    {name:'SPBU Jababeka', addr:'Jl. Niaga Raya', fuels:['Pertalite','Pertamax']},
+    {name:'SPBU MM2100', addr:'Jl. Selayar', fuels:['Pertamax','Solar']},
+  ];
+  const stationGrid = document.getElementById('station-grid');
+  stations.forEach(s=>{
+    const el = document.createElement('div');
+    el.className = 'glowCard';
+    el.innerHTML = `<b>${s.name}</b><div style="font-size:11px; color:var(--t3); margin:4px 0 10px;">${s.addr}</div><div style="display:flex; gap:6px; flex-wrap:wrap;">${s.fuels.map(f=>`<span class="pill pill-assigned">${f}</span>`).join('')}</div>`;
+    stationGrid.appendChild(el);
+  });
+
+  /* Locker */
+  let lockers = [1,0,1,1,0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  function renderLockers(){
+    const grid = document.getElementById('locker-grid');
+    grid.innerHTML = '';
+    lockers.forEach((s,i)=>{
+      const d = document.createElement('div');
+      d.className = 'locker ' + (s?'terisi':'tersedia');
+      d.innerHTML = 'L' + String(i+1).padStart(2,'0') + '<span style="font-size:8.5px; font-weight:400;">' + (s?'Terpakai':'Tersedia') + '</span>';
+      d.onclick = ()=>{ lockers[i]=lockers[i]?0:1; renderLockers(); };
+      grid.appendChild(d);
+    });
+  }
+  renderLockers();
+
+  /* Reports */
+  function generateReport(){
+    document.getElementById('report-empty').style.display='none';
+    document.getElementById('report-result').style.display='block';
+  }
+  const canteenCsv = "Tanggal,Snack Dipesan,Snack Sisa,Makan Dipesan,Makan Sisa\n2026-07-01,42,2,35,1\n2026-07-02,40,3,33,2\n(data dummy untuk keperluan demo)";
+  const reportCsv = "Metrik,Nilai\nTotal Tugas,142\nTotal Klaim,18\nTotal Overtime,36 jam\nDana Terpakai,Rp 32.400.000\n(data dummy untuk keperluan demo)";
+  function downloadCsv(filename, content){
+    const blob = new Blob([content], {type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href=url; a.download=filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+</script>
+
+</body>
+</html>

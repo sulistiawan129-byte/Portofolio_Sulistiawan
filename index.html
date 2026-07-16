@@ -21,9 +21,41 @@
     background:
       radial-gradient(1100px 600px at 10% -10%, rgba(45,212,255,0.10), transparent 60%),
       radial-gradient(900px 700px at 100% 0%, rgba(183,107,255,0.09), transparent 55%),
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
       var(--bg);
+    background-size: auto, auto, 46px 46px, 46px 46px, auto;
     color:var(--text); font-family:'Inter', sans-serif; line-height:1.55;
+    position:relative;
   }
+  /* drifting ambient glow orbs — breaks up the flat background */
+  body::before, body::after{
+    content:''; position:fixed; border-radius:50%; filter:blur(90px); z-index:-1; pointer-events:none;
+  }
+  body::before{
+    width:460px; height:460px; top:-140px; left:-120px; opacity:0.30;
+    background:var(--cyan); animation:driftA 24s ease-in-out infinite;
+  }
+  body::after{
+    width:420px; height:420px; bottom:-120px; right:-100px; opacity:0.26;
+    background:var(--violet); animation:driftB 28s ease-in-out infinite;
+  }
+  @keyframes driftA{ 0%,100%{transform:translate(0,0);} 50%{transform:translate(70px,90px);} }
+  @keyframes driftB{ 0%,100%{transform:translate(0,0);} 50%{transform:translate(-60px,-80px);} }
+  @media (prefers-reduced-motion: reduce){
+    body::before, body::after{ animation:none; }
+  }
+  /* per-section tint accents so sections don't all read the same */
+  section{position:relative; overflow:hidden;}
+  section.tint-cyan::before{
+    content:''; position:absolute; top:-110px; right:-90px; width:360px; height:360px;
+    background:radial-gradient(circle, rgba(45,212,255,0.10), transparent 70%); z-index:0; pointer-events:none;
+  }
+  section.tint-violet::before{
+    content:''; position:absolute; bottom:-110px; left:-90px; width:360px; height:360px;
+    background:radial-gradient(circle, rgba(183,107,255,0.10), transparent 70%); z-index:0; pointer-events:none;
+  }
+  section .wrap{position:relative; z-index:1;}
   h1,h2,h3{font-family:'Space Grotesk', sans-serif;}
   .mono{font-family:'JetBrains Mono', monospace;}
   a{color:inherit;}
@@ -172,6 +204,76 @@
   }
   .contact-chip:hover{border-color:var(--cyan);}
 
+  /* ---------- portfolio / project demo ---------- */
+  .project-card{
+    border-radius:22px; padding:30px; background:var(--glass); border:1px solid var(--glass-border);
+    backdrop-filter:blur(16px);
+  }
+  .project-badge{
+    display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono'; font-size:10.5px;
+    color:var(--success); border:1px solid rgba(78,230,160,0.35); background:rgba(78,230,160,0.07);
+    padding:4px 10px; border-radius:100px; margin-bottom:12px;
+  }
+  .project-badge::before{content:'●'; font-size:8px;}
+  .project-card h3{font-size:23px; margin-bottom:4px;}
+  .project-sub{font-family:'JetBrains Mono'; font-size:12.5px; color:var(--cyan); margin-bottom:16px;}
+  .project-desc{color:var(--muted); font-size:14px; max-width:680px; margin-bottom:26px;}
+
+  .tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; border-bottom:1px solid var(--glass-border); padding-bottom:0;}
+  .tab-btn{
+    font-family:'JetBrains Mono'; font-size:12.5px; padding:10px 16px; background:transparent; border:none;
+    color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:color .2s, border-color .2s;
+  }
+  .tab-btn:hover{color:var(--text);}
+  .tab-btn.active{color:var(--cyan); border-bottom-color:var(--cyan);}
+
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block; animation:fadeIn .35s ease;}
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  .demo-toolbar{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;}
+  .demo-note{font-size:11.5px; color:var(--muted); font-family:'JetBrains Mono';}
+
+  .fleet-table{width:100%; border-collapse:collapse; font-size:13px;}
+  .fleet-table th{
+    text-align:left; font-family:'JetBrains Mono'; font-size:10.5px; color:var(--muted); font-weight:500;
+    padding:9px 10px; border-bottom:1px solid var(--glass-border);
+  }
+  .fleet-table td{padding:11px 10px; border-bottom:1px solid rgba(255,255,255,0.05); color:#c7d0ea;}
+  .status-pill{
+    font-family:'JetBrains Mono'; font-size:10.5px; padding:4px 10px; border-radius:100px; display:inline-block;
+  }
+  .status-aktif{background:rgba(78,230,160,0.1); color:var(--success); border:1px solid rgba(78,230,160,0.3);}
+  .status-maintenance{background:rgba(245,197,66,0.1); color:#f5c542; border:1px solid rgba(245,197,66,0.3);}
+
+  .atk-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:18px;}
+  @media(max-width:640px){ .atk-stats{grid-template-columns:1fr;} }
+  .atk-stat{padding:14px; border-radius:12px; background:rgba(255,255,255,0.03); border:1px solid var(--glass-border); text-align:center;}
+  .atk-stat .num{font-family:'Space Grotesk'; font-size:18px; font-weight:700; color:var(--cyan);}
+  .atk-stat .lbl{font-size:10.5px; color:var(--muted); font-family:'JetBrains Mono'; margin-top:3px;}
+
+  .atk-queue{display:flex; flex-direction:column; gap:8px;}
+  .atk-row{
+    display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 14px;
+    border-radius:10px; background:rgba(255,255,255,0.03); border:1px solid var(--glass-border); font-size:13px;
+  }
+  .atk-row .item{color:var(--text);}
+  .atk-row .meta{font-size:11px; color:var(--muted); font-family:'JetBrains Mono';}
+  .status-diproses{background:rgba(45,212,255,0.1); color:var(--cyan); border:1px solid rgba(45,212,255,0.3);}
+  .status-selesai{background:rgba(78,230,160,0.1); color:var(--success); border:1px solid rgba(78,230,160,0.3);}
+
+  .locker-grid{display:grid; grid-template-columns:repeat(6,1fr); gap:10px;}
+  @media(max-width:640px){ .locker-grid{grid-template-columns:repeat(4,1fr);} }
+  .locker{
+    aspect-ratio:1; border-radius:10px; display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono'; font-size:12px; cursor:pointer; border:1px solid var(--glass-border);
+    background:rgba(255,255,255,0.03); color:var(--muted); transition:all .2s ease; user-select:none;
+  }
+  .locker.terpakai{background:rgba(183,107,255,0.12); border-color:rgba(183,107,255,0.4); color:#dcb8ff;}
+  .locker.tersedia{background:rgba(78,230,160,0.08); border-color:rgba(78,230,160,0.35); color:var(--success);}
+  .locker-legend{display:flex; gap:18px; margin-top:16px; font-size:12px; color:var(--muted);}
+  .legend-dot{width:9px; height:9px; border-radius:3px; display:inline-block; margin-right:6px; vertical-align:middle;}
+
   footer{padding:34px 0; text-align:center; color:var(--muted); font-size:12.5px; border-top:1px solid var(--glass-border);}
 
   .toast{
@@ -192,6 +294,7 @@
       <a href="#tentang">Tentang</a>
       <a href="#pengalaman">Pengalaman</a>
       <a href="#skill">Skill</a>
+      <a href="#portofolio">Proyek</a>
       <a href="#kontak">Kontak</a>
     </div>
     <a href="assets/cv-sulistiawan.pdf" download class="nav-cta">Download CV</a>
@@ -242,7 +345,7 @@
   </div>
 </section>
 
-<section id="tentang">
+<section id="tentang" class="tint-cyan">
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">tentang saya</div>
@@ -260,7 +363,7 @@
   </div>
 </section>
 
-<section id="pengalaman">
+<section id="pengalaman" class="tint-violet">
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">rekam jejak</div>
@@ -292,7 +395,7 @@
   </div>
 </section>
 
-<section id="skill">
+<section id="skill" class="tint-cyan">
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">kompetensi</div>
@@ -337,6 +440,34 @@
           <span class="tag">Adaptif</span>
           <span class="tag">Teliti & Detail</span>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="portofolio" class="tint-violet">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">proyek nyata</div>
+      <h2>Sistem yang Saya Bangun</h2>
+      <p>Bukan cuma menjalankan proses — saya inisiasi dan bangun sendiri sistem digital untuk menggantikan proses manual di tempat kerja.</p>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-badge">PROYEK NYATA · DEMO PUBLIK PAKAI DATA DUMMY</div>
+      <h3>CIKOPS-FM System</h3>
+      <div class="project-sub">Next.js 14 · Supabase (Postgres + Realtime) · Deploy di Vercel</div>
+      <p class="project-desc">
+        Sistem Facility Management yang saya bangun sendiri untuk menggantikan pencatatan manual/kertas —
+        mencakup manajemen tugas driver &amp; fleet, kantin, locker, direktori SPBU rekanan, hingga laporan
+        bulanan otomatis. Awalnya berjalan di atas Google Apps Script &amp; Google Sheets, lalu saya rancang ulang
+        dengan stack modern (Next.js + Supabase) lengkap dengan update real-time. Untuk menjaga kerahasiaan data
+        operasional perusahaan, demo di bawah ini adalah replika tampilan &amp; alur kerja yang sama persis —
+        hanya datanya diganti dengan data simulasi.
+      </p>
+
+      <div class="hero-actions" style="margin-bottom:8px;">
+        <a href="cikops-demo.html" target="_blank" rel="noopener" class="btn-primary">🖥️ Buka Demo Interaktif</a>
       </div>
     </div>
   </div>
@@ -413,6 +544,7 @@
     toast.classList.add('show');
     setTimeout(()=> toast.classList.remove('show'), 1800);
   }
+
 </script>
 
 </body>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Sulistiawan — General Affairs & Operations Specialist</title>
+<meta name="description" content="Portofolio Sulistiawan — Spesialis General Affairs & Operasional, Fleet & Asset Management, Digital Process Innovator.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#070a12; --bg-soft:#0c1120;
+    --cyan:#2dd4ff; --violet:#b76bff;
+    --text:#eaf0ff; --muted:#8b96b8;
+    --glass:rgba(255,255,255,0.045); --glass-border:rgba(255,255,255,0.09);
+    --success:#4ee6a0;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(1100px 600px at 10% -10%, rgba(45,212,255,0.10), transparent 60%),
+      radial-gradient(900px 700px at 100% 0%, rgba(183,107,255,0.09), transparent 55%),
+      var(--bg);
+    color:var(--text); font-family:'Inter', sans-serif; line-height:1.55;
+  }
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+  section{padding:90px 0;}
+  @media(max-width:720px){ section{padding:60px 0;} }
+
+  /* reveal on scroll */
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky; top:0; z-index:50; backdrop-filter:blur(14px);
+    background:rgba(7,10,18,0.65); border-bottom:1px solid var(--glass-border);
+  }
+  .nav-inner{max-width:1080px; margin:0 auto; padding:16px 24px; display:flex; align-items:center; justify-content:space-between;}
+  .logo{font-weight:700; font-size:17px; display:flex; align-items:center; gap:9px;}
+  .logo-dot{width:8px; height:8px; border-radius:50%; background:var(--cyan); box-shadow:0 0 10px var(--cyan);}
+  .nav-links{display:flex; gap:28px; font-size:13.5px; color:var(--muted);}
+  .nav-links a:hover{color:var(--text);}
+  .nav-cta{
+    font-size:13px; font-weight:600; padding:9px 18px; border-radius:100px;
+    background:linear-gradient(120deg, var(--cyan), var(--violet)); color:#04060b;
+  }
+  @media(max-width:720px){ .nav-links{display:none;} }
+
+  /* ---------- hero ---------- */
+  .hero{padding-top:70px; padding-bottom:40px;}
+  .hero-grid{display:grid; grid-template-columns:200px 1fr; gap:44px; align-items:center;}
+  @media(max-width:720px){ .hero-grid{grid-template-columns:1fr; text-align:center; justify-items:center;} }
+
+  .avatar-wrap{position:relative; width:180px; height:180px;}
+  .avatar{
+    width:180px; height:180px; border-radius:28px; object-fit:cover;
+    background:linear-gradient(135deg, var(--cyan), var(--violet));
+    display:flex; align-items:center; justify-content:center;
+    font-size:60px; font-weight:700; color:#04060b; font-family:'Space Grotesk';
+    border:1px solid var(--glass-border); box-shadow:0 0 40px rgba(45,212,255,0.12);
+  }
+  .avatar img{width:100%; height:100%; object-fit:cover; border-radius:28px;}
+  .upload-fab{
+    position:absolute; bottom:-10px; right:-10px; width:42px; height:42px; border-radius:50%;
+    background:var(--bg-soft); border:1px solid var(--glass-border); display:flex; align-items:center;
+    justify-content:center; cursor:pointer; font-size:17px; transition:border-color .2s;
+  }
+  .upload-fab:hover{border-color:var(--cyan);}
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono'; font-size:11.5px;
+    color:var(--cyan); border:1px solid rgba(45,212,255,0.35); padding:5px 12px; border-radius:100px;
+    background:rgba(45,212,255,0.06); margin-bottom:16px;
+  }
+  .hero h1{font-size:34px; letter-spacing:-0.5px; margin-bottom:8px;}
+  .hero .role{color:var(--cyan); font-family:'JetBrains Mono'; font-size:14.5px; margin-bottom:14px;}
+  .hero .tagline{color:var(--muted); font-size:15px; max-width:560px; margin-bottom:22px;}
+  .hero-actions{display:flex; gap:12px; flex-wrap:wrap;}
+  @media(max-width:720px){ .hero-actions{justify-content:center;} }
+  .btn-primary{
+    background:linear-gradient(120deg, var(--cyan), var(--violet)); color:#04060b; font-weight:600;
+    padding:12px 22px; border-radius:10px; font-size:14px; border:none; cursor:pointer;
+    transition:transform .15s ease; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost{
+    padding:11px 20px; border-radius:10px; font-size:14px; font-weight:500;
+    border:1px solid var(--glass-border); color:var(--text); background:var(--glass); cursor:pointer;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-ghost:hover{border-color:rgba(255,255,255,0.25);}
+
+  /* stat strip */
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:46px;}
+  @media(max-width:720px){ .stats{grid-template-columns:1fr 1fr;} }
+  .stat-card{
+    padding:20px 16px; border-radius:16px; background:var(--glass); border:1px solid var(--glass-border);
+    text-align:center; backdrop-filter:blur(12px);
+  }
+  .stat-num{font-family:'Space Grotesk'; font-size:20px; font-weight:700; color:var(--cyan);}
+  .stat-label{font-size:11.5px; color:var(--muted); margin-top:5px; font-family:'JetBrains Mono'; line-height:1.4;}
+
+  /* ---------- section head ---------- */
+  .section-head{max-width:600px; margin-bottom:36px;}
+  .section-head h2{font-size:28px; font-weight:600;}
+  .section-head p{color:var(--muted); margin-top:10px; font-size:14.5px;}
+
+  /* about */
+  .about-text{color:#c7d0ea; font-size:15px; max-width:760px;}
+
+  /* experience */
+  .timeline{position:relative; padding-left:26px; border-left:1.5px solid var(--glass-border);}
+  .exp-item{position:relative; margin-bottom:38px;}
+  .exp-item::before{
+    content:''; position:absolute; left:-31.5px; top:4px; width:11px; height:11px; border-radius:50%;
+    background:var(--cyan); box-shadow:0 0 10px var(--cyan);
+  }
+  .exp-role{font-size:17px; font-weight:600; font-family:'Space Grotesk';}
+  .exp-meta{font-size:12.5px; color:var(--muted); font-family:'JetBrains Mono'; margin:5px 0 14px;}
+  .exp-list{list-style:none;}
+  .exp-list li{
+    position:relative; padding-left:18px; margin-bottom:9px; font-size:14px; color:#c7d0ea;
+  }
+  .exp-list li::before{content:'▹'; position:absolute; left:0; color:var(--cyan);}
+  .exp-list b{color:var(--text);}
+
+  /* skills */
+  .skill-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
+  @media(max-width:720px){ .skill-grid{grid-template-columns:1fr;} }
+  .skill-card{
+    padding:22px; border-radius:16px; background:var(--glass); border:1px solid var(--glass-border); backdrop-filter:blur(12px);
+  }
+  .skill-card h3{font-size:14.5px; color:var(--cyan); font-family:'JetBrains Mono'; margin-bottom:14px; font-weight:500;}
+  .tag-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .tag{
+    font-family:'JetBrains Mono'; font-size:11.5px; padding:6px 12px; border-radius:100px;
+    border:1px solid rgba(45,212,255,0.28); color:#bfeeff; background:rgba(45,212,255,0.05);
+  }
+
+  /* education + awards */
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:26px;}
+  @media(max-width:720px){ .two-col{grid-template-columns:1fr;} }
+  .panel{padding:24px; border-radius:16px; background:var(--glass); border:1px solid var(--glass-border); backdrop-filter:blur(12px);}
+  .panel h3{font-family:'JetBrains Mono'; font-size:13px; color:var(--muted); margin-bottom:16px; letter-spacing:0.4px;}
+  .edu-item{margin-bottom:16px;}
+  .edu-item:last-child{margin-bottom:0;}
+  .edu-item .deg{font-weight:600; font-size:14.5px;}
+  .edu-item .meta{font-size:12.5px; color:var(--muted); margin-top:2px; font-family:'JetBrains Mono';}
+  .award-item{display:flex; gap:12px; margin-bottom:16px; font-size:13.5px; color:#c7d0ea;}
+  .award-item:last-child{margin-bottom:0;}
+  .award-icon{flex-shrink:0;}
+  .award-item b{color:var(--text);}
+
+  /* contact */
+  .contact-card{
+    text-align:center; padding:60px 40px; border-radius:24px; background:var(--glass); border:1px solid var(--glass-border);
+    backdrop-filter:blur(16px);
+  }
+  .contact-card h2{font-size:28px; margin-bottom:12px;}
+  .contact-card p{color:var(--muted); margin-bottom:28px;}
+  .contact-links{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+  .contact-chip{
+    display:flex; align-items:center; gap:8px; padding:11px 18px; border-radius:100px;
+    background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); font-size:13.5px; cursor:pointer;
+    transition:border-color .2s;
+  }
+  .contact-chip:hover{border-color:var(--cyan);}
+
+  footer{padding:34px 0; text-align:center; color:var(--muted); font-size:12.5px; border-top:1px solid var(--glass-border);}
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); opacity:0;
+    background:var(--bg-soft); border:1px solid rgba(78,230,160,0.4); color:var(--success);
+    padding:11px 20px; border-radius:100px; font-size:13px; font-family:'JetBrains Mono';
+    transition:opacity .25s ease, transform .25s ease; pointer-events:none; z-index:100;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo"><span class="logo-dot"></span>Sulistiawan</div>
+    <div class="nav-links">
+      <a href="#tentang">Tentang</a>
+      <a href="#pengalaman">Pengalaman</a>
+      <a href="#skill">Skill</a>
+      <a href="#kontak">Kontak</a>
+    </div>
+    <a href="assets/cv-sulistiawan.pdf" download class="nav-cta">Download CV</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="avatar-wrap">
+      <div class="avatar" id="avatar">
+        <span id="avatar-initial">S</span>
+        <img id="avatar-img" style="display:none;" alt="Foto Sulistiawan">
+      </div>
+      <div class="upload-fab" onclick="document.getElementById('photoInput').click()" title="Ganti foto">📷</div>
+      <input type="file" id="photoInput" accept="image/*" style="display:none">
+    </div>
+    <div>
+      <div class="eyebrow">● tersedia untuk peluang baru</div>
+      <h1>Sulistiawan</h1>
+      <div class="role">Spesialis General Affairs & Operasional · Fleet & Asset Management</div>
+      <p class="tagline">Mengelola operasional, aset, dan anggaran perusahaan dengan presisi — sekaligus membangun sistem digital yang memangkas proses manual hingga lebih dari 50%. Berbasis di Cikarang Baru, Kab. Bekasi.</p>
+      <div class="hero-actions">
+        <a href="assets/cv-sulistiawan.pdf" download class="btn-primary">⬇ Download CV (PDF)</a>
+        <a href="#kontak" class="btn-ghost">✉ Hubungi Saya</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stats reveal">
+      <div class="stat-card">
+        <div class="stat-num">5 & 4</div>
+        <div class="stat-label">UNIT KENDARAAN & DRIVER DIKELOLA</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">Rp20–50Jt</div>
+        <div class="stat-label">ANGGARAN OPERASIONAL / BULAN</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">AKURASI REKONSILIASI KEUANGAN</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">50%+</div>
+        <div class="stat-label">EFISIENSI PROSES VIA DIGITALISASI</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tentang">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">tentang saya</div>
+      <h2>Operasional yang rapi, didukung cara berpikir digital</h2>
+    </div>
+    <p class="about-text reveal">
+      Saya Sulistiawan, Spesialis General Affairs & Operasional dengan latar belakang Sarjana Sistem Informasi.
+      Pengalaman saya mencakup pengelolaan fleet dan aset perusahaan, pengendalian anggaran operasional,
+      koordinasi multi-vendor, hingga administrasi front office di lingkungan rumah sakit. Yang membedakan saya:
+      saya tidak berhenti di menjalankan proses yang sudah ada — saya membangun sistem digital sendiri
+      (digitalisasi ATK dan manajemen locker) yang terbukti memangkas waktu proses lebih dari 50%, dan diganjar
+      <b>People Story Award: Innovative Placemaker</b>. Bagi saya, General Affairs bukan sekadar menjaga
+      operasional tetap jalan — tapi mencari cara agar berjalan lebih baik.
+    </p>
+  </div>
+</section>
+
+<section id="pengalaman">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">rekam jejak</div>
+      <h2>Pengalaman Kerja</h2>
+      <p>Dua peran, satu benang merah: ketelitian operasional dan inisiatif perbaikan proses.</p>
+    </div>
+
+    <div class="timeline reveal">
+      <div class="exp-item">
+        <div class="exp-role">General Affairs (GA) Administrator</div>
+        <div class="exp-meta">PT. ISS Indonesia — ditempatkan di PT Frisian Flag Indonesia · Nov 2024 – Sekarang</div>
+        <ul class="exp-list">
+          <li><b>Fleet & Asset Management</b> — mengelola end-to-end 5 unit kendaraan & 4 driver, kepatuhan dokumen (STNK, KIR, asuransi), preventive maintenance, dan coaching performa driver. Hasil: zero pelanggaran regulasi.</li>
+          <li><b>Pengendalian Keuangan</b> — mengelola dana operasional Rp20–50 juta/bulan lewat sistem MXP, dengan akurasi rekonsiliasi 100% dan zero selisih laporan.</li>
+          <li><b>Optimalisasi Vendor & Infrastruktur</b> — mengoordinasikan 3 vendor eksternal (Security, Cleaning Service, Kantin) secara simultan, plus mapping konsumsi energi untuk efisiensi biaya.</li>
+          <li><b>Inovasi Digital</b> — membangun sistem Digitalisasi ATK & Manajemen Locker secara mandiri, memangkas waktu pengadaan &gt;50%. Meraih People Story Award: Innovative Placemaker.</li>
+        </ul>
+      </div>
+      <div class="exp-item">
+        <div class="exp-role">Front Office & Administrasi Pendaftaran Rehabilitasi Medik</div>
+        <div class="exp-meta">PT. ISS Indonesia — RS Islam Jakarta Cempaka Putih · Nov 2022 – Okt 2024</div>
+        <ul class="exp-list">
+          <li>Mengelola operasional front desk unit Rehabilitasi Medik, termasuk panduan prosedur BPJS dan verifikasi biometrik pasien.</li>
+          <li>Menangani penjadwalan pasien dengan entri data presisi dan dokumentasi rekam medis yang akurat.</li>
+          <li>Berkoordinasi dengan staf medis untuk verifikasi kelayakan BPJS dan kepatuhan administratif.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skill">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">kompetensi</div>
+      <h2>Skill & Keahlian</h2>
+    </div>
+    <div class="skill-grid reveal">
+      <div class="skill-card">
+        <h3>// OPERASIONAL & GA</h3>
+        <div class="tag-row">
+          <span class="tag">Manajemen Fleet & Aset</span>
+          <span class="tag">Manajemen Vendor</span>
+          <span class="tag">Facility Management</span>
+          <span class="tag">Pengendalian Inventaris</span>
+          <span class="tag">Kepatuhan Regulasi</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>// KEUANGAN & ADMINISTRASI</h3>
+        <div class="tag-row">
+          <span class="tag">Petty Cash</span>
+          <span class="tag">Rekonsiliasi Keuangan</span>
+          <span class="tag">Sistem MXP</span>
+          <span class="tag">Pelaporan Data</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>// TEKNOLOGI & ALAT</h3>
+        <div class="tag-row">
+          <span class="tag">Google Workspace</span>
+          <span class="tag">Apps Script</span>
+          <span class="tag">Microsoft Office</span>
+          <span class="tag">CRM Tools</span>
+          <span class="tag">Digitalisasi Proses</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>// SOFT SKILLS</h3>
+        <div class="tag-row">
+          <span class="tag">Koordinasi Lintas Fungsi</span>
+          <span class="tag">Problem Solving</span>
+          <span class="tag">Proaktif</span>
+          <span class="tag">Adaptif</span>
+          <span class="tag">Teliti & Detail</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pendidikan">
+  <div class="wrap">
+    <div class="two-col reveal">
+      <div class="panel">
+        <h3>// PENDIDIKAN</h3>
+        <div class="edu-item">
+          <div class="deg">S1 Sistem Informasi (Program Ekstensi)</div>
+          <div class="meta">Universitas BSI, Jakarta · 2023–2024 · IPK 3,08/4,00</div>
+        </div>
+        <div class="edu-item">
+          <div class="deg">D3 Manajemen Informatika</div>
+          <div class="meta">AMIK BSI, Jakarta · 2009–2012</div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>// PENGHARGAAN & SERTIFIKASI</h3>
+        <div class="award-item"><span class="award-icon">🏆</span><span><b>People Story Award: Innovative Placemaker</b> — atas digitalisasi ATK yang meningkatkan efisiensi operasional &gt;50%.</span></div>
+        <div class="award-item"><span class="award-icon">📜</span><span><b>BNSP</b> — Operator Komputer Muda (Sertifikasi Profesi Nasional)</span></div>
+        <div class="award-item"><span class="award-icon">📜</span><span><b>Microsoft Office Practitioner (MOP)</b> — ESAS Management</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kontak">
+  <div class="wrap">
+    <div class="contact-card reveal">
+      <h2>Mari terhubung</h2>
+      <p>Terbuka untuk peluang di bidang General Affairs, Operasional, dan Manajemen Fleet & Aset.</p>
+      <div class="contact-links">
+        <div class="contact-chip" onclick="copyText('sulistiawan200@gmail.com', this)">✉ sulistiawan200@gmail.com</div>
+        <div class="contact-chip" onclick="copyText('085692725678', this)">📞 085692725678</div>
+        <a class="contact-chip" href="https://linkedin.com/in/sulistiawanms20" target="_blank" rel="noopener">🔗 linkedin.com/in/sulistiawanms20</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Sulistiawan. Dibuat dengan portofolio.dev.</footer>
+
+<div class="toast" id="toast">Tersalin ke clipboard ✓</div>
+
+<script>
+  // scroll reveal
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+  }, {threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // photo upload preview
+  document.getElementById('photoInput').addEventListener('change', function(e){
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      const img = document.getElementById('avatar-img');
+      img.src = ev.target.result;
+      img.style.display = 'block';
+      document.getElementById('avatar-initial').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // copy to clipboard
+  function copyText(text, el){
+    navigator.clipboard && navigator.clipboard.writeText(text);
+    const toast = document.getElementById('toast');
+    toast.textContent = 'Tersalin: ' + text;
+    toast.classList.add('show');
+    setTimeout(()=> toast.classList.remove('show'), 1800);
+  }
+</script>
+
+</body>
+</html>

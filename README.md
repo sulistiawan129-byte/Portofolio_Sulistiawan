@@ -19,7 +19,21 @@ atau jalankan server lokal sederhana:
 npx serve .
 ```
 
-## Upload ke GitHub
+## Upload dari HP (paling gampang)
+
+CV sudah **ditempel langsung di dalam `index.html`** (format base64), jadi
+kamu **cukup upload 1 file** ini — tombol "Download CV" akan langsung jalan
+tanpa perlu folder `assets` sama sekali:
+
+1. Buka repo GitHub kamu lewat browser HP → **Add file → Upload files**
+2. Upload cuma `index.html` (dan `cikops-demo.html` kalau mau ikut fitur demo proyek)
+3. Commit
+
+Folder `assets/` tetap ada di paket ini untuk cadangan/backup CV asli dan logo
+proyek CIKOPS-FM (dipakai oleh `cikops-demo.html`) — tapi khusus untuk CV di
+halaman utama, folder itu **tidak wajib** diupload.
+
+## Upload ke GitHub (lewat command line, lebih lengkap)
 
 ```bash
 git init
@@ -40,30 +54,29 @@ git push -u origin main
 
 Setiap kali kamu `git push` perubahan baru, Vercel otomatis build ulang.
 
-## Mengganti foto profil secara permanen
+## Mengganti foto profil
 
-Fitur "📷" di halaman hanya menampilkan **preview di browser pengunjung sendiri**
-(tidak tersimpan permanen karena situs ini statis, tanpa database). Supaya foto
-tampil permanen untuk semua orang:
+Foto profil kamu **sudah ditempel langsung di dalam `index.html`** (base64,
+sama seperti CV) — jadi kalau upload cuma file `index.html`, foto tetap tampil
+permanen untuk semua pengunjung, di semua device.
 
-1. Simpan foto kamu sebagai `assets/foto-profil.jpg`
-2. Di `index.html`, cari bagian:
-   ```html
-   <div class="avatar" id="avatar">
-     <span id="avatar-initial">S</span>
-     <img id="avatar-img" style="display:none;" alt="Foto Sulistiawan">
-   ```
-3. Ganti jadi:
-   ```html
-   <div class="avatar" id="avatar">
-     <img src="assets/foto-profil.jpg" alt="Foto Sulistiawan">
-   ```
+Tombol kamera "📷" di halaman tetap ada untuk **preview cepat** (misal mau coba
+foto lain) — tapi itu cuma tampil di browser kamu sendiri saat itu juga, tidak
+tersimpan permanen. Untuk ganti foto secara permanen, cara termudah adalah
+balik ke Claude dan minta "ganti foto profil di web ini dengan foto baru".
 
 ## Mengganti file CV
 
-Ganti file `assets/cv-sulistiawan.pdf` dengan versi terbarumu — nama file
-harus tetap sama (`cv-sulistiawan.pdf`) supaya tombol "Download CV" tidak perlu diubah.
-Jika ingin nama file lain, cari `cv-sulistiawan.pdf` di `index.html` dan ganti di kedua tempat.
+CV di halaman ini ditempel sebagai teks base64 langsung di dalam `index.html`
+(bukan file terpisah), supaya bisa upload cuma 1 file dari HP. Kalau mau ganti
+ke versi CV yang lebih baru, ini paling gampang dilakukan lewat Claude lagi —
+tinggal upload CV baru dan minta "ganti CV yang bisa didownload di web ini".
+
+Kalau mau melakukannya sendiri secara manual: convert PDF baru ke base64
+(banyak tool online gratis untuk ini, cari "PDF to base64 converter"), lalu di
+`index.html` cari dua baris yang diawali `data:application/pdf;base64,` dan
+ganti teks panjang setelahnya dengan hasil base64 yang baru — dilakukan di
+kedua tempat (tombol di navbar dan tombol di hero).
 
 ## Menambahkan form kontak / database (opsional, tahap lanjut)
 
